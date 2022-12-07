@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
-
 import com.miniautorizador.dto.CartaoDTO;
+import com.miniautorizador.dto.SaldoDTO;
 import com.miniautorizador.model.Cartao;
 import com.miniautorizador.repository.CartaoRepository;
 
@@ -31,15 +31,15 @@ public class CartaoController {
 		cartao.setSaldoCartao(500);
 		Cartao cartaoCriado = cartaoRepository.save(cartao);
 		CartaoDTO cartaoDTO = new CartaoDTO(cartaoCriado);
-		return new ResponseEntity<CartaoDTO>(cartaoDTO,HttpStatusCode.valueOf(201));
+		return new ResponseEntity<CartaoDTO>(cartaoDTO,HttpStatusCode.valueOf(201)); //CRIAÇÃO COM SUCESSO STATUS CODE 201
 	}
 	
 	//RETORNA SALDO
 	@GetMapping(value = "/{numeroCartao}")
-	public ResponseEntity<Cartao> saldoCartao(@PathVariable(value = "numeroCartao") Long numeroCartao){
+	public ResponseEntity<SaldoDTO> saldoCartao(@PathVariable(value = "numeroCartao") Long numeroCartao){
 		Optional<Cartao> cartao = cartaoRepository.findById(numeroCartao);
-		//return cartao.get().getSaldoCartao();
-		return new ResponseEntity<Cartao>(cartao.get(), HttpStatus.OK);
+		SaldoDTO saldoDTO = new SaldoDTO(cartao.get());
+		return new ResponseEntity<SaldoDTO>(saldoDTO, HttpStatusCode.valueOf(200)); //BUSCA DO SALDO COM SUCESSO STATUS CODE 200
 	}
 	
 	//REALIZA UMA TRANSAÇÃO
