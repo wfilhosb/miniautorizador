@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
 
+import com.miniautorizador.dto.CartaoDTO;
 import com.miniautorizador.model.Cartao;
 import com.miniautorizador.repository.CartaoRepository;
 
@@ -26,10 +27,11 @@ public class CartaoController {
 	
 	//CRIAR NOVO CARTAO
 	@PostMapping(value = "/", produces = "application/json")
-	public ResponseEntity<Cartao> criarNovo(@RequestBody Cartao cartao){
+	public ResponseEntity<CartaoDTO> criarNovo(@RequestBody Cartao cartao){
 		cartao.setSaldoCartao(500);
 		Cartao cartaoCriado = cartaoRepository.save(cartao);
-		return new ResponseEntity<Cartao>(cartaoCriado,HttpStatusCode.valueOf(201));
+		CartaoDTO cartaoDTO = new CartaoDTO(cartaoCriado);
+		return new ResponseEntity<CartaoDTO>(cartaoDTO,HttpStatusCode.valueOf(201));
 	}
 	
 	//RETORNA SALDO
