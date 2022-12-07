@@ -3,6 +3,7 @@ package com.miniautorizador.model;
 import java.io.Serializable;
 import java.util.Objects;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,6 +13,7 @@ import jakarta.persistence.Id;
 public class Cartao implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
+	@Column(unique = true)
 	private Long numeroCartao;
 	private String senhaCartao;
 	private double saldoCartao;
