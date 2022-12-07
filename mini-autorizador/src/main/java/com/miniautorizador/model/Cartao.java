@@ -12,19 +12,9 @@ import jakarta.persistence.Id;
 public class Cartao implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long codigoCartao;
 	private Long numeroCartao;
 	private String senhaCartao;
 	private double saldoCartao;
-
-	public Long getCodigoCartao() {
-		return codigoCartao;
-	}
-
-	public void setCodigoCartao(Long codigoCartao) {
-		this.codigoCartao = codigoCartao;
-	}
 
 	public Long getNumeroCartao() {
 		return numeroCartao;
@@ -52,7 +42,7 @@ public class Cartao implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(codigoCartao);
+		return Objects.hash(numeroCartao);
 	}
 
 	@Override
@@ -64,7 +54,7 @@ public class Cartao implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Cartao other = (Cartao) obj;
-		return Objects.equals(codigoCartao, other.codigoCartao);
+		return Objects.equals(numeroCartao, other.numeroCartao);
 	}
 
 }
