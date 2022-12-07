@@ -3,10 +3,12 @@ package com.miniautorizador.model;
 import java.io.Serializable;
 import java.util.Objects;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+@Entity
 public class Cartao implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
@@ -15,14 +17,6 @@ public class Cartao implements Serializable {
 	private Long numeroCartao;
 	private String senhaCartao;
 	private double saldoCartao;
-
-	public Cartao(Long codigoCartao, Long numeroCartao, String senhaCartao, double saldoCartao) {
-		super();
-		this.codigoCartao = codigoCartao;
-		this.numeroCartao = numeroCartao;
-		this.senhaCartao = senhaCartao;
-		this.saldoCartao = saldoCartao;
-	}
 
 	public Long getCodigoCartao() {
 		return codigoCartao;
