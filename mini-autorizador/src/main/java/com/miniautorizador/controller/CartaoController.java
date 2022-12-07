@@ -21,32 +21,38 @@ import com.miniautorizador.repository.CartaoRepository;
 @RestController
 @RequestMapping(value = "/cartoes")
 public class CartaoController {
-	
+
 	@Autowired
 	private CartaoRepository cartaoRepository;
-	
-	//CRIAR NOVO CARTAO
+
+	// CRIAR NOVO CARTAO
 	@PostMapping(value = "/", produces = "application/json")
-	public ResponseEntity<CartaoDTO> criarNovo(@RequestBody Cartao cartao){
-		cartao.setSaldoCartao(500);
-		Cartao cartaoCriado = cartaoRepository.save(cartao);
-		CartaoDTO cartaoDTO = new CartaoDTO(cartaoCriado);
-		return new ResponseEntity<CartaoDTO>(cartaoDTO,HttpStatusCode.valueOf(201)); //CRIAÇÃO COM SUCESSO STATUS CODE 201
+	public ResponseEntity<CartaoDTO> criarNovo(@RequestBody Cartao cartao) {
+			cartao.setSaldoCartao(500);
+			Cartao cartaoCriado = cartaoRepository.save(cartao);
+			CartaoDTO cartaoDTO = new CartaoDTO(cartaoCriado);
+			return new ResponseEntity<CartaoDTO>(cartaoDTO, HttpStatusCode.valueOf(201)); // CRIAÇÃO COM SUCESSO STATUS CODE 201
 	}
-	
-	//RETORNA SALDO
+
+	// RETORNA SALDO
 	@GetMapping(value = "/{numeroCartao}")
-	public ResponseEntity<SaldoDTO> saldoCartao(@PathVariable(value = "numeroCartao") Long numeroCartao){
-		Optional<Cartao> cartao = cartaoRepository.findById(numeroCartao);
-		SaldoDTO saldoDTO = new SaldoDTO(cartao.get());
-		return new ResponseEntity<SaldoDTO>(saldoDTO, HttpStatusCode.valueOf(200)); //BUSCA DO SALDO COM SUCESSO STATUS CODE 200
+	public ResponseEntity<SaldoDTO> saldoCartao(@PathVariable(value = "numeroCartao") Long numeroCartao) {
+		try {
+			Optional<Cartao> cartao = cartaoRepository.findById(numeroCartao);
+			SaldoDTO saldoDTO = new SaldoDTO(cartao.get());
+			return new ResponseEntity<SaldoDTO>(saldoDTO, HttpStatusCode.valueOf(200)); // BUSCA DO SALDO COM SUCESSO STATUS 200																		// CODE 200
+		}catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<SaldoDTO>(HttpStatusCode.valueOf(404)); //CASO NÃO EXISTA STATUS CODE 404
+		}
+		
 	}
-	
-	//REALIZA UMA TRANSAÇÃO
+
+	// REALIZA UMA TRANSAÇÃO
 	@PostMapping(value = "/transacoes")
-	public ResponseEntity<Cartao> realizaTransacao(@RequestBody Cartao cartao){
+	public ResponseEntity<Cartao> realizaTransacao(@RequestBody Cartao cartao) {
 		Cartao cartaoDaTransacao = cartaoRepository.save(cartao);
-		return new ResponseEntity<Cartao>(cartaoDaTransacao,HttpStatusCode.valueOf(201));
+		return new ResponseEntity<Cartao>(cartaoDaTransacao, HttpStatusCode.valueOf(201));
 	}
-	
+
 }
