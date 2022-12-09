@@ -1,0 +1,84 @@
+{
+	"info": {
+		"_postman_id": "e878fec5-af35-42f7-8af1-7d7fd0db2e6f",
+		"name": "MiniAutorizador",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "CadastroCartao",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"numeroCartao\":1111222233334441,\r\n    \"senhaCartao\":\"11111111\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/cartoes/",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cartoes",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "BuscaSaldo",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/cartoes/1111222233334441",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cartoes",
+						"1111222233334441"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Transação",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"numeroCartaoTransacao\":1111222233334441,\r\n    \"senhaCartaoTransacao\":\"242424\",\r\n    \"valorTransacao\":500\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/transacoes/",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"transacoes",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
