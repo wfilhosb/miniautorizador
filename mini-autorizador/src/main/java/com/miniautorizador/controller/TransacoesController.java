@@ -33,19 +33,16 @@ public class TransacoesController {
 			if (cartaoDaTransacao.get().getNumeroCartao() == transacao.getNumeroCartaoTransacao()
 					&& cartaoDaTransacao.get().getSaldoCartao() >= transacao.getValorTransacao()
 					&& cartaoDaTransacao.get().getSenhaCartao() == transacao.getSenhaCartaoTransacao()) {
-				// DEBITO VALOR TRANSACAO
-				cartaoDaTransacao.get()
-						.setSaldoCartao(cartaoDaTransacao.get().getSaldoCartao() - transacao.getValorTransacao());
-				// PERSISTINDO O NOVO VALOR NO BANCO DE DADOS
+				cartaoDaTransacao.get().setSaldoCartao(cartaoDaTransacao.get().getSaldoCartao() - transacao.getValorTransacao());
 				cartaoRepository.save(cartaoDaTransacao.get());
-				return new ResponseEntity("OK",HttpStatusCode.valueOf(201));
+				return new ResponseEntity("OK", HttpStatusCode.valueOf(201));
 			} else if (cartaoDaTransacao.get().getSaldoCartao() < transacao.getValorTransacao()) {
-				return new ResponseEntity("SALDO_INSUFICIENTE",HttpStatusCode.valueOf(422));
+				return new ResponseEntity("SALDO_INSUFICIENTE", HttpStatusCode.valueOf(422));
 			} else {
-				return new ResponseEntity("SENHA_INVALIDA",HttpStatusCode.valueOf(422));
+				return new ResponseEntity("SENHA_INVALIDA", HttpStatusCode.valueOf(422));
 			}
 		} catch (Exception e) {
-			return new ResponseEntity("CARTAO_INEXISTENTE",HttpStatusCode.valueOf(422));
+			return new ResponseEntity("CARTAO_INEXISTENTE", HttpStatusCode.valueOf(422));
 		}
 	}
 }
