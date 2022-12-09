@@ -1,0 +1,106 @@
+openapi: 3.0.1
+info:
+  title: API Autorizador
+  description: A VR processa todos os dias diversas transações de Vale Refeição e Vale Alimentação, entre outras. De forma breve, as transações saem das maquininhas de cartão e chegam até uma de nossas aplicações, conhecidas como autorizador, que realiza um série de verificações e análises.
+  version: 0.0.1
+  contact:
+    name: E-mail
+    email: wfilhosb@hotmail.com
+  license:
+    name: "Lincença: GPLv3"
+    url: https://www.gnu.org/licenses/gpl-3.0.html
+servers:
+- url: https://localhost:8080/
+  description: Teste API no LocalHost
+paths:
+  /cartoes/:
+    post:
+      summary: Cria um novo cartão, caso o número informado já existe apenas retorna o cartão existente
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                numeroCartao:
+                  type: integer
+                senhaCartao:
+                  type: integer
+      responses:
+        201:
+          description: "Cartão criado na base dados."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Cartoes"
+        422:
+          description: "Cartão já existente na base de dados apenas retorna."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Cartoes"
+  /cartoes/{numeroCartao}:
+    parameters:
+      - name: numeroCartao
+        in: path
+        schema:
+          type: number
+        required: true
+    get:
+      summary: Retorna o saldo de um cartao existente.
+      responses:
+        200:
+          description: "Exibe o saldo do cartao"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Saldo"
+        404:
+          description: "Cartão não existe, sem resposta no body"
+  /transacoes/:
+    post:
+      summary: "Realiza uma transacao e debita o saldo do cartão se: o cartão existir, senha conferir e saldo seja suficiente para a transacao ser aprovada"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                numeroCartaoTransacao:
+                  type: integer
+                senhaCartaoTransacao:
+                  type: integer
+                valorTransacao:
+                  type: number
+      responses:
+        201:
+          description: "Transação realizada com sucesso, resposta no body OK."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Transacao"
+        422:
+          description: "Possíveis respostas no body: SALDO_INSUFICIENTE, SENHA_INVALIDA e CARTAO_INESXISTENTE"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Transacao"
+components:
+  schemas:
+    Cartoes:
+      type: object
+      properties:
+        senhaCartao:
+          type: integer
+        numeroCartao:
+          type: integer
+    Saldo:
+      type: object
+      properties:
+        saldo:
+          type: number
+    Transacao:
+      type: object
+      properties:
+        body:
+          type: string
