@@ -12,7 +12,7 @@ public class Transacoes implements Serializable {
 
 	@Id
 	private Long numeroCartaoTransacao;
-	private String senhaCartaoTransacao;
+	private int senhaCartaoTransacao;
 	private double valorTransacao;
 
 	public Long getNumeroCartaoTransacao() {
@@ -23,11 +23,11 @@ public class Transacoes implements Serializable {
 		this.numeroCartaoTransacao = numeroCartaoTransacao;
 	}
 
-	public String getSenhaCartaoTransacao() {
+	public int getSenhaCartaoTransacao() {
 		return senhaCartaoTransacao;
 	}
 
-	public void setSenhaCartaoTransacao(String senhaCartaoTransacao) {
+	public void setSenhaCartaoTransacao(int senhaCartaoTransacao) {
 		this.senhaCartaoTransacao = senhaCartaoTransacao;
 	}
 

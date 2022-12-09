@@ -18,21 +18,34 @@ import com.miniautorizador.repository.TransacoesRepository;
 @RestController
 @RequestMapping(value = "/transacoes")
 public class TransacoesController {
-	
+
 	@Autowired(required = false)
-	private TransacoesRepository transacoesRepository;//requer um bean do tipo TransacoesRepository
-	
+	private TransacoesRepository transacoesRepository;
+
 	@Autowired
 	private CartaoRepository cartaoRepository;
-	
+
 	@PostMapping(value = "/", produces = "apllication/json")
-	public ResponseEntity<Transacoes> realizarTransacao(@RequestBody Transacoes transacao){
-		Optional<Cartao> cartaoDaTransacao = cartaoRepository.findById(transacao.getNumeroCartaoTransacao());
-		System.out.println(cartaoDaTransacao.get().getSenhaCartao());
-		System.out.println(cartaoDaTransacao.get().getSaldoCartao());
-		System.out.println("-----------------");
-		System.out.println(transacao.getValorTransacao());
-		
-		return new ResponseEntity<Transacoes>(HttpStatusCode.valueOf(201));
+	public ResponseEntity<Transacoes> realizarTransacao(@RequestBody Transacoes transacao) {
+
+		try {
+			Optional<Cartao> cartaoDaTransacao = cartaoRepository.findById(transacao.getNumeroCartaoTransacao());
+			if (cartaoDaTransacao.get().getNumeroCartao() == transacao.getNumeroCartaoTransacao()
+					&& cartaoDaTransacao.get().getSaldoCartao() >= transacao.getValorTransacao()
+					&& cartaoDaTransacao.get().getSenhaCartao() == transacao.getSenhaCartaoTransacao()) {
+				// DEBITO VALOR TRANSACAO
+				cartaoDaTransacao.get()
+						.setSaldoCartao(cartaoDaTransacao.get().getSaldoCartao() - transacao.getValorTransacao());
+				// PERSISTINDO O NOVO VALOR NO BANCO DE DADOS
+				cartaoRepository.save(cartaoDaTransacao.get());
+				return new ResponseEntity("OK",HttpStatusCode.valueOf(201));
+			} else if (cartaoDaTransacao.get().getSaldoCartao() < transacao.getValorTransacao()) {
+				return new ResponseEntity("SALDO_INSUFICIENTE",HttpStatusCode.valueOf(422));
+			} else {
+				return new ResponseEntity("SENHA_INVALIDA",HttpStatusCode.valueOf(422));
+			}
+		} catch (Exception e) {
+			return new ResponseEntity("CARTAO_INEXISTENTE",HttpStatusCode.valueOf(422));
+		}
 	}
 }

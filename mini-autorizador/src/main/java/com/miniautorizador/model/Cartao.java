@@ -15,7 +15,7 @@ public class Cartao implements Serializable {
 	@Id
 	@Column(unique = true)
 	private Long numeroCartao;
-	private String senhaCartao;
+	private int senhaCartao;
 	private double saldoCartao;
 
 	public Long getNumeroCartao() {
@@ -26,11 +26,11 @@ public class Cartao implements Serializable {
 		this.numeroCartao = numeroCartao;
 	}
 
-	public String getSenhaCartao() {
+	public int getSenhaCartao() {
 		return senhaCartao;
 	}
 
-	public void setSenhaCartao(String senhaCartao) {
+	public void setSenhaCartao(int senhaCartao) {
 		this.senhaCartao = senhaCartao;
 	}
 

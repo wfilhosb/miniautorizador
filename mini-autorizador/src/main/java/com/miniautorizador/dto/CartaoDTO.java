@@ -4,7 +4,7 @@ import com.miniautorizador.model.Cartao;
 
 public class CartaoDTO{
 	
-	private String senha;
+	private int senha;
 	private Long numeroCartao;
 	
 	public CartaoDTO (Cartao cartao) {
@@ -12,11 +12,11 @@ public class CartaoDTO{
 		this.numeroCartao = cartao.getNumeroCartao();
 	}
 	
-	public String getSenha() {
+	public int getSenha() {
 		return senha;
 	}
 	
-	public void setSenha(String senha) {
+	public void setSenha(int senha) {
 		this.senha = senha;
 	}
 
