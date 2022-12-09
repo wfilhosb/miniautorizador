@@ -3,18 +3,14 @@ package com.miniautorizador.controller;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.HttpClientErrorException;
 import com.miniautorizador.dto.CartaoDTO;
 import com.miniautorizador.dto.SaldoDTO;
 import com.miniautorizador.model.Cartao;
@@ -57,14 +53,6 @@ public class CartaoController {
 			return new ResponseEntity<SaldoDTO>(HttpStatusCode.valueOf(404)); // CASO NÃO EXISTA STATUS CODE 404
 		}
 
-	}
-
-	// REALIZA UMA TRANSAÇÃO
-	@PostMapping(value = "/transacoes")
-	public ResponseEntity<Cartao> realizaTransacao(@RequestParam ("valor") double valor) {
-		//Cartao cartaoDaTransacao = cartaoRepository.save(cartao);
-		System.out.println(valor);
-		return new ResponseEntity<Cartao>(HttpStatusCode.valueOf(201));
 	}
 
 }
