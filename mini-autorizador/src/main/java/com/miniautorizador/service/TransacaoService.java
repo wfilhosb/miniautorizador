@@ -21,14 +21,14 @@ public class TransacaoService {
 	public ResponseEntity<Mensagem> realizarTransacao(Transacoes transacao) {
 
 		try {
-			Optional<Cartao> cartaoDaTransacao = cartaoRepository.findById(transacao.getNumeroCartaoTransacao());
-			if (cartaoDaTransacao.get().getNumeroCartao() == transacao.getNumeroCartaoTransacao()
-					&& cartaoDaTransacao.get().getSaldoCartao() >= transacao.getValorTransacao()
-					&& cartaoDaTransacao.get().getSenhaCartao() == transacao.getSenhaCartaoTransacao()) {
-				cartaoDaTransacao.get().setSaldoCartao(cartaoDaTransacao.get().getSaldoCartao() - transacao.getValorTransacao());
+			Optional<Cartao> cartaoDaTransacao = cartaoRepository.findById(transacao.getNumeroCartao());
+			if (cartaoDaTransacao.get().getNumeroCartao() == transacao.getNumeroCartao()
+					&& cartaoDaTransacao.get().getSaldoCartao() >= transacao.getValor()
+					&& cartaoDaTransacao.get().getSenhaCartao() == transacao.getSenhaCartao()) {
+				cartaoDaTransacao.get().setSaldoCartao(cartaoDaTransacao.get().getSaldoCartao() - transacao.getValor());
 				cartaoRepository.save(cartaoDaTransacao.get());
 				return new ResponseEntity(new Mensagem("OK"), HttpStatus.valueOf(201));
-			} else if (cartaoDaTransacao.get().getSaldoCartao() < transacao.getValorTransacao()) {
+			} else if (cartaoDaTransacao.get().getSaldoCartao() < transacao.getValor()) {
 				return new ResponseEntity(new Mensagem("SALDO_INSUFICIENTE"), HttpStatus.valueOf(422));
 			} else {
 				return new ResponseEntity(new Mensagem("SENHA_INVALIDA"), HttpStatus.valueOf(422));

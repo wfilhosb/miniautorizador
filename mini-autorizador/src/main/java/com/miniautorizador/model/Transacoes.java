@@ -9,37 +9,37 @@ public class Transacoes implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	
-	private Long numeroCartaoTransacao;
-	private int senhaCartaoTransacao;
-	private double valorTransacao;
+	private Long numeroCartao;
+	private int senhaCartao;
+	private double valor;
 
-	public Long getNumeroCartaoTransacao() {
-		return numeroCartaoTransacao;
+	public Long getNumeroCartao() {
+		return numeroCartao;
 	}
 
-	public void setNumeroCartaoTransacao(Long numeroCartaoTransacao) {
-		this.numeroCartaoTransacao = numeroCartaoTransacao;
+	public void setNumeroCartao(Long numeroCartao) {
+		this.numeroCartao = numeroCartao;
 	}
 
-	public int getSenhaCartaoTransacao() {
-		return senhaCartaoTransacao;
+	public int getSenhaCartao() {
+		return senhaCartao;
 	}
 
-	public void setSenhaCartaoTransacao(int senhaCartaoTransacao) {
-		this.senhaCartaoTransacao = senhaCartaoTransacao;
+	public void setSenhaCartao(int senhaCartao) {
+		this.senhaCartao = senhaCartao;
 	}
 
-	public double getValorTransacao() {
-		return valorTransacao;
+	public double getValor() {
+		return valor;
 	}
 
-	public void setValorTransacao(double valorTransacao) {
-		this.valorTransacao = valorTransacao;
+	public void setValor(double valor) {
+		this.valor = valor;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(numeroCartaoTransacao);
+		return Objects.hash(numeroCartao);
 	}
 
 	@Override
@@ -51,7 +51,7 @@ public class Transacoes implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Transacoes other = (Transacoes) obj;
-		return Objects.equals(numeroCartaoTransacao, other.numeroCartaoTransacao);
+		return Objects.equals(numeroCartao, other.numeroCartao);
 	}
 
 }

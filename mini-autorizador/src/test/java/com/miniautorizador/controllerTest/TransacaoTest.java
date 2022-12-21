@@ -42,9 +42,9 @@ public class TransacaoTest {
 	public void testeTransacao_Sucesso() throws Exception {
 
 		Transacoes cartaoTransacao = new Transacoes();
-		cartaoTransacao.setNumeroCartaoTransacao(9999888899998888L);
-		cartaoTransacao.setSenhaCartaoTransacao(54321);
-		cartaoTransacao.setValorTransacao(500);
+		cartaoTransacao.setNumeroCartao(9999888899998888L);
+		cartaoTransacao.setSenhaCartao(54321);
+		cartaoTransacao.setValor(500);
 
 		ResponseEntity<Mensagem> statusTransacao = ResponseEntity.status(HttpStatus.CREATED).body(new Mensagem("OK"));
 
@@ -63,9 +63,9 @@ public class TransacaoTest {
 	public void testeSaldoInsuficiente_Falha() throws Exception {
 
 		Transacoes cartaoTransacao = new Transacoes();
-		cartaoTransacao.setNumeroCartaoTransacao(9999888899998888L);
-		cartaoTransacao.setSenhaCartaoTransacao(54321);
-		cartaoTransacao.setValorTransacao(900);
+		cartaoTransacao.setNumeroCartao(9999888899998888L);
+		cartaoTransacao.setSenhaCartao(54321);
+		cartaoTransacao.setValor(900);
 
 		ResponseEntity<Mensagem> statusTransacao = ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(new Mensagem("SALDO_INSUFICIENTE"));
 
@@ -84,9 +84,9 @@ public class TransacaoTest {
 	public void testeSenhaIncorreta_Falha() throws Exception {
 
 		Transacoes cartaoTransacao = new Transacoes();
-		cartaoTransacao.setNumeroCartaoTransacao(9999888899998888L);
-		cartaoTransacao.setSenhaCartaoTransacao(57777);
-		cartaoTransacao.setValorTransacao(500);
+		cartaoTransacao.setNumeroCartao(9999888899998888L);
+		cartaoTransacao.setSenhaCartao(57777);
+		cartaoTransacao.setValor(500);
 
 		ResponseEntity<Mensagem> statusTransacao = ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(new Mensagem("SENHA_INCORRETA"));
 
@@ -105,9 +105,9 @@ public class TransacaoTest {
 	public void testeCartaoInexistente_Falha() throws Exception {
 
 		Transacoes cartaoTransacao = new Transacoes();
-		cartaoTransacao.setNumeroCartaoTransacao(999999999999L);
-		cartaoTransacao.setSenhaCartaoTransacao(54321);
-		cartaoTransacao.setValorTransacao(500);
+		cartaoTransacao.setNumeroCartao(999999999999L);
+		cartaoTransacao.setSenhaCartao(54321);
+		cartaoTransacao.setValor(500);
 
 		ResponseEntity<Mensagem> statusTransacao = ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(new Mensagem("CARTAO_INEXISTENTE"));
 
