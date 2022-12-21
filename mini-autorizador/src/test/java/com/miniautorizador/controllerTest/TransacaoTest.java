@@ -18,11 +18,8 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.miniautorizador.controller.TransacoesController;
-import com.miniautorizador.dto.CartaoDTO;
-import com.miniautorizador.model.Cartao;
 import com.miniautorizador.model.Mensagem;
 import com.miniautorizador.model.Transacoes;
-import com.miniautorizador.service.CartaoService;
 import com.miniautorizador.service.TransacaoService;
 
 @WebMvcTest(TransacoesController.class)
@@ -49,16 +46,79 @@ public class TransacaoTest {
 		cartaoTransacao.setSenhaCartaoTransacao(54321);
 		cartaoTransacao.setValorTransacao(500);
 
-		ResponseEntity<Mensagem> mensagemTransacao = ResponseEntity.status(HttpStatus.CREATED).body(new Mensagem("OK"));
+		ResponseEntity<Mensagem> statusTransacao = ResponseEntity.status(HttpStatus.CREATED).body(new Mensagem("OK"));
 
 		String jsonBody = objectMapper.writeValueAsString(cartaoTransacao);
 
-		when(transacaoService.realizarTransacao(cartaoTransacao)).thenReturn(mensagemTransacao);
+		when(transacaoService.realizarTransacao(cartaoTransacao)).thenReturn(statusTransacao);
 
-		var result = mockMvc.perform(post("/cartoes").content(jsonBody).contentType(MediaType.APPLICATION_JSON)
+		var result = mockMvc.perform(post("/transacoes/").content(jsonBody).contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON));
 
 		result.andExpect(status().isCreated());
-		result.andExpect(jsonPath("$.conteudoMensagem").contentEquals("OK"));
+		result.andExpect(jsonPath("$.conteudoMensagem").value("OK"));
+	}
+	
+	@Test
+	public void testeSaldoInsuficiente_Falha() throws Exception {
+
+		Transacoes cartaoTransacao = new Transacoes();
+		cartaoTransacao.setNumeroCartaoTransacao(9999888899998888L);
+		cartaoTransacao.setSenhaCartaoTransacao(54321);
+		cartaoTransacao.setValorTransacao(900);
+
+		ResponseEntity<Mensagem> statusTransacao = ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(new Mensagem("SALDO_INSUFICIENTE"));
+
+		String jsonBody = objectMapper.writeValueAsString(cartaoTransacao);
+
+		when(transacaoService.realizarTransacao(cartaoTransacao)).thenReturn(statusTransacao);
+
+		var result = mockMvc.perform(post("/transacoes/").content(jsonBody).contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON));
+
+		result.andExpect(status().isUnprocessableEntity());
+		result.andExpect(jsonPath("$.conteudoMensagem").value("SALDO_INSUFICIENTE"));
+	}
+	
+	@Test
+	public void testeSenhaIncorreta_Falha() throws Exception {
+
+		Transacoes cartaoTransacao = new Transacoes();
+		cartaoTransacao.setNumeroCartaoTransacao(9999888899998888L);
+		cartaoTransacao.setSenhaCartaoTransacao(57777);
+		cartaoTransacao.setValorTransacao(500);
+
+		ResponseEntity<Mensagem> statusTransacao = ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(new Mensagem("SENHA_INCORRETA"));
+
+		String jsonBody = objectMapper.writeValueAsString(cartaoTransacao);
+
+		when(transacaoService.realizarTransacao(cartaoTransacao)).thenReturn(statusTransacao);
+
+		var result = mockMvc.perform(post("/transacoes/").content(jsonBody).contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON));
+
+		result.andExpect(status().isUnprocessableEntity());
+		result.andExpect(jsonPath("$.conteudoMensagem").value("SENHA_INCORRETA"));
+	}
+	
+	@Test
+	public void testeCartaoInexistente_Falha() throws Exception {
+
+		Transacoes cartaoTransacao = new Transacoes();
+		cartaoTransacao.setNumeroCartaoTransacao(999999999999L);
+		cartaoTransacao.setSenhaCartaoTransacao(54321);
+		cartaoTransacao.setValorTransacao(500);
+
+		ResponseEntity<Mensagem> statusTransacao = ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(new Mensagem("CARTAO_INEXISTENTE"));
+
+		String jsonBody = objectMapper.writeValueAsString(cartaoTransacao);
+
+		when(transacaoService.realizarTransacao(cartaoTransacao)).thenReturn(statusTransacao);
+
+		var result = mockMvc.perform(post("/transacoes/").content(jsonBody).contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON));
+
+		result.andExpect(status().isUnprocessableEntity());
+		result.andExpect(jsonPath("$.conteudoMensagem").value("CARTAO_INEXISTENTE"));
 	}
 }
