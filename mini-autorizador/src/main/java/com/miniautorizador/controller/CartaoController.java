@@ -20,7 +20,7 @@ public class CartaoController {
 	@Autowired
 	private CartaoService cartaoService;
 
-	@PostMapping(value = "/", produces = "application/json")
+	@PostMapping
 	public ResponseEntity<CartaoDTO> criarNovo(@RequestBody Cartao cartao) {
 		ResponseEntity<CartaoDTO> cartaoDTO = cartaoService.criarNovo(cartao);
 		return cartaoDTO;

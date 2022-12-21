@@ -3,14 +3,12 @@ package com.miniautorizador.model;
 import java.io.Serializable;
 import java.util.Objects;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Id;
 
 public class Transacoes implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@Id
+	
 	private Long numeroCartaoTransacao;
 	private int senhaCartaoTransacao;
 	private double valorTransacao;

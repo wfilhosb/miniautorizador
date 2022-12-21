@@ -11,13 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @SpringBootApplication
-@EntityScan(basePackages = {"com.miniautorizador.model"})
-@ServletComponentScan(basePackages = {"com.miniautorizador.*"})
-@EnableJpaRepositories(basePackages = {"com.miniautorizador.repository"})
-@EnableTransactionManagement
-@EnableWebMvc
-@RestController
-@EnableAutoConfiguration
 public class MiniAutorizadorApplication {
 
 	public static void main(String[] args) {

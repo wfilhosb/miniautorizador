@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.miniautorizador.model.Mensagem;
 import com.miniautorizador.model.Transacoes;
 import com.miniautorizador.service.TransacaoService;
 
@@ -16,9 +18,9 @@ public class TransacoesController {
 	@Autowired
 	private TransacaoService transacoesService;
 
-	@PostMapping(value = "/", produces = "apllication/json")
-	public ResponseEntity<Transacoes> realizarTransacao(@RequestBody Transacoes transacao) {
-		ResponseEntity<Transacoes> transacaoRealizada = transacoesService.realizarTransacao(transacao);
+	@PostMapping
+	public ResponseEntity<Mensagem> realizarTransacao(@RequestBody Transacoes transacao) {
+		ResponseEntity<Mensagem> transacaoRealizada = transacoesService.realizarTransacao(transacao);
 		return transacaoRealizada;
 	}
 	
