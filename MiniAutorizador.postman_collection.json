@@ -12,7 +12,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"numeroCartao\":1111222233334441,\r\n    \"senhaCartao\":\"11111111\"\r\n}",
+					"raw": "{\r\n    \"numeroCartao\":9999888899998882,\r\n    \"senhaCartao\":\"54321\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -20,14 +20,13 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/cartoes/",
+					"raw": "localhost:8080/cartoes",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"cartoes",
-						""
+						"cartoes"
 					]
 				}
 			},
@@ -39,14 +38,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/cartoes/1111222233334441",
+					"raw": "localhost:8080/cartoes/9999888899998888",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
 						"cartoes",
-						"1111222233334441"
+						"9999888899998888"
 					]
 				}
 			},
@@ -59,7 +58,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"numeroCartaoTransacao\":1111222233334441,\r\n    \"senhaCartaoTransacao\":\"242424\",\r\n    \"valorTransacao\":500\r\n}",
+					"raw": "{\r\n    \"numeroCartao\":9999888899998888,\r\n    \"senhaCartao\":\"54321\",\r\n    \"valor\":555\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
