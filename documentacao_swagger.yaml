@@ -66,11 +66,11 @@ paths:
             schema:
               type: object
               properties:
-                numeroCartaoTransacao:
+                numeroCartao:
                   type: integer
-                senhaCartaoTransacao:
+                senhaCartao:
                   type: integer
-                valorTransacao:
+                valor:
                   type: number
       responses:
         201:
